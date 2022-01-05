@@ -1,0 +1,38 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.container h2 {
+  margin: 10% 0 0 0;
+  font-size: 5rem;
+}
+
+.container h4 {
+  margin: 5% 0 0 0;
+  font-size: 2.5rem;
+}
+
+.options {
+  display: flex;
+  gap: 20px;
+  margin-top: 5%;
+  text-align: center;
+}
+
+.options span {
+  padding: 10px;
+  font-size: 2rem;
+  width: 100px;
+  font-weight: bold;
+}
+
+.options span:hover {
+  cursor: pointer;
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.418);
+  color: rosybrown;
+}

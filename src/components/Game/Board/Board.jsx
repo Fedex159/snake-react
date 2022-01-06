@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
-import s from "./Board.module.css";
 import { newMovement, randomInteger } from "../../../utils";
+import GameOver from "../GameOver/GameOver";
+import s from "./Board.module.css";
 
 const directions = ["ArrowDown", "ArrowUp", "ArrowRight", "ArrowLeft"];
 const validDir = {
@@ -16,7 +17,7 @@ const oppositeMov = {
   ArrowRight: "ArrowLeft",
 };
 
-function Board({ difficult }) {
+function Board({ difficult, setDifficult }) {
   const width = 600;
   const height = 400;
   const total = (width / 20) * (height / 20);
@@ -24,7 +25,7 @@ function Board({ difficult }) {
   const refBoard = useRef(null);
   const [breaks, setBreaks] = useState([]);
   const [cells, setCells] = useState(new Array(total).fill(false));
-  const [food, setFood] = useState(530);
+  const [food, setFood] = useState(null);
   const [snake, setSnake] = useState([
     { dir: "ArrowDown", pos: 140 }, // Head
     { dir: "ArrowDown", pos: 110 },
@@ -32,6 +33,17 @@ function Board({ difficult }) {
     { dir: "ArrowDown", pos: 50 },
     { dir: "ArrowDown", pos: 20 }, // Tail
   ]);
+  const [gameOver, setGameOver] = useState(false);
+
+  // generate a food when start
+  useEffect(() => {
+    let random = randomInteger(0, 599);
+    while (cells[random] === true || cells[random] === null) {
+      random = randomInteger(0, 599);
+    }
+    setFood(random);
+    // eslint-disable-next-line
+  }, []);
 
   useEffect(() => {
     // eat food
@@ -81,21 +93,23 @@ function Board({ difficult }) {
   useEffect(() => {
     let interval = null;
 
-    interval = setInterval(() => {
-      setSnake((prev) => {
-        return prev.map((e) => {
-          const index = breaks.findIndex((b) => b.pos === e.pos);
-          const flag = index === -1 ? e.dir : breaks[index].dir;
-          return {
-            dir: flag,
-            pos: newMovement(30, 20, e.pos, flag),
-          };
+    if (!gameOver) {
+      interval = setInterval(() => {
+        setSnake((prev) => {
+          return prev.map((e) => {
+            const index = breaks.findIndex((b) => b.pos === e.pos);
+            const flag = index === -1 ? e.dir : breaks[index].dir;
+            return {
+              dir: flag,
+              pos: newMovement(30, 20, e.pos, flag),
+            };
+          });
         });
-      });
-    }, difficult);
+      }, difficult);
+    }
 
     return () => clearInterval(interval);
-  }, [snake, breaks, difficult]);
+  }, [snake, breaks, difficult, gameOver]);
 
   const handleKey = (event) => {
     const newDirection = event.key;
@@ -119,15 +133,22 @@ function Board({ difficult }) {
     <div
       ref={refBoard}
       className={s.container}
-      onKeyDown={handleKey}
+      onKeyDown={!gameOver ? handleKey : null}
       tabIndex={0}
     >
       {cells.map((c, i) => (
         <div
           key={`cell_${i}`}
-          className={`${s.cell} ${c === true ? s.fill : c === null && s.food}`}
+          className={`${s.cell} ${
+            c === true
+              ? gameOver
+                ? s.death
+                : s.fill
+              : c === null && `${s.food} ${gameOver && s.death}`
+          }`}
         ></div>
       ))}
+      {gameOver ? <GameOver setDifficult={setDifficult} /> : null}
     </div>
   );
 }

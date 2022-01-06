@@ -99,9 +99,15 @@ function Board({ difficult, setDifficult }) {
           return prev.map((e) => {
             const index = breaks.findIndex((b) => b.pos === e.pos);
             const flag = index === -1 ? e.dir : breaks[index].dir;
+            const newPos = newMovement(30, 20, e.pos, flag);
+            const crash = snake.filter((s) => s.pos === newPos);
+
+            if (e.pos === newPos || crash.length > 1) {
+              setGameOver(true);
+            }
             return {
               dir: flag,
-              pos: newMovement(30, 20, e.pos, flag),
+              pos: newPos,
             };
           });
         });

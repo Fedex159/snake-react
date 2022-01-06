@@ -13,7 +13,7 @@ function Game() {
       {showCountDown ? (
         <CountDown setShowCountDown={setShowCountDown} />
       ) : difficult ? (
-        <Board difficult={difficult} />
+        <Board difficult={difficult} setDifficult={setDifficult} />
       ) : (
         <StartGame
           setDifficult={setDifficult}

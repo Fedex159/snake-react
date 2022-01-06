@@ -2,8 +2,8 @@ import React from "react";
 import s from "./StartGame.module.css";
 
 const options = [
-  { name: "Easy", value: 500 },
-  { name: "Medium", value: 200 },
+  { name: "Easy", value: 200 },
+  { name: "Medium", value: 100 },
   { name: "Hard", value: 50 },
 ];
 

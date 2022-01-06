@@ -7,10 +7,11 @@ const options = [
   { name: "Hard", value: 50 },
 ];
 
-function StartGame({ setDifficult }) {
+function StartGame({ setDifficult, setShowCountDown }) {
   const handleClick = (event) => {
     const value = event.target.id.split("_")[1];
     setDifficult(value);
+    setShowCountDown(true);
   };
 
   return (

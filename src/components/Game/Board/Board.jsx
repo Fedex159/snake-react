@@ -71,7 +71,7 @@ function Board({ difficult }) {
       setSnake((prev) => [...prev, { dir: tail.dir, pos: newTail }]);
 
       let random = randomInteger(0, 600);
-      while (cells[random]) {
+      while (cells[random] === true || cells[random] === null) {
         random = randomInteger(0, 600);
       }
       setFood(random);

@@ -2,6 +2,12 @@ import React, { useRef, useState, useEffect } from "react";
 import s from "./Board.module.css";
 
 const directions = ["ArrowDown", "ArrowUp", "ArrowRight", "ArrowLeft"];
+const validDir = {
+  ArrowDown: ["ArrowLeft", "ArrowRight"],
+  ArrowUp: ["ArrowLeft", "ArrowRight"],
+  ArrowLeft: ["ArrowDown", "ArrowUp"],
+  ArrowRight: ["ArrowDown", "ArrowUp"],
+};
 
 function newMovement(itemsPerRow, columns, position, direction) {
   const row = Math.floor(position / itemsPerRow);
@@ -30,7 +36,7 @@ function newMovement(itemsPerRow, columns, position, direction) {
   return position;
 }
 
-function Board() {
+function Board({ difficult }) {
   const width = 600;
   const height = 400;
   const total = (width / 20) * (height / 20);
@@ -89,15 +95,20 @@ function Board() {
           };
         });
       });
-    }, 50);
+    }, difficult);
 
     return () => clearInterval(interval);
-  }, [snake, breaks]);
+  }, [snake, breaks, difficult]);
 
   const handleKey = (event) => {
     const newDirection = event.key;
-    const index = directions.indexOf(newDirection);
-    if (index !== -1) {
+    const indexDir = directions.indexOf(newDirection);
+
+    const moveValids = validDir[snake[0].dir];
+    const indexMov = moveValids.indexOf(newDirection);
+
+    const flag = indexDir !== -1 && indexMov !== -1;
+    if (flag) {
       setSnake((prev) => {
         const arr = [...prev];
         setBreaks((prev) => [...prev, { dir: arr[0].dir, pos: arr[0].pos }]);

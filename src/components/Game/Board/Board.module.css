@@ -14,3 +14,8 @@
 .fill {
   background-color: black;
 }
+
+.food {
+  transform: rotate(45deg);
+  background-color: red;
+}

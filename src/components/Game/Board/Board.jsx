@@ -8,6 +8,12 @@ const validDir = {
   ArrowLeft: ["ArrowDown", "ArrowUp"],
   ArrowRight: ["ArrowDown", "ArrowUp"],
 };
+const oppositeMov = {
+  ArrowLeft: "ArrowRight",
+  ArrowUp: "ArrowDown",
+  ArrowDown: "ArrowUp",
+  ArrowRight: "ArrowLeft",
+};
 
 function newMovement(itemsPerRow, columns, position, direction) {
   const row = Math.floor(position / itemsPerRow);
@@ -36,6 +42,10 @@ function newMovement(itemsPerRow, columns, position, direction) {
   return position;
 }
 
+function randomInteger(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 function Board({ difficult }) {
   const width = 600;
   const height = 400;
@@ -44,13 +54,29 @@ function Board({ difficult }) {
   const refBoard = useRef(null);
   const [breaks, setBreaks] = useState([]);
   const [cells, setCells] = useState(new Array(total).fill(false));
+  const [food, setFood] = useState(530);
   const [snake, setSnake] = useState([
-    { dir: "ArrowDown", pos: 140 },
+    { dir: "ArrowDown", pos: 140 }, // Head
     { dir: "ArrowDown", pos: 110 },
     { dir: "ArrowDown", pos: 80 },
     { dir: "ArrowDown", pos: 50 },
-    { dir: "ArrowDown", pos: 20 },
+    { dir: "ArrowDown", pos: 20 }, // Tail
   ]);
+
+  useEffect(() => {
+    // eat food
+    if (snake[0].pos === food) {
+      const tail = snake[snake.length - 1];
+      const newTail = newMovement(30, 20, tail.pos, oppositeMov[tail.dir]);
+      setSnake((prev) => [...prev, { dir: tail.dir, pos: newTail }]);
+
+      let random = randomInteger(0, 600);
+      while (cells[random]) {
+        random = randomInteger(0, 600);
+      }
+      setFood(random);
+    }
+  }, [snake, food, cells]);
 
   useEffect(() => {
     // Remove break when all snake pass
@@ -71,9 +97,10 @@ function Board({ difficult }) {
       snake.forEach((e) => {
         arr[e.pos] = true;
       });
+      arr[food] = null;
       return arr;
     });
-  }, [snake, total]);
+  }, [snake, total, food]);
 
   useEffect(() => {
     if (refBoard.current) {
@@ -126,7 +153,10 @@ function Board({ difficult }) {
       tabIndex={0}
     >
       {cells.map((c, i) => (
-        <div key={`cell_${i}`} className={`${s.cell} ${c && s.fill}`}></div>
+        <div
+          key={`cell_${i}`}
+          className={`${s.cell} ${c === true ? s.fill : c === null && s.food}`}
+        ></div>
       ))}
     </div>
   );

@@ -1,4 +1,5 @@
 .container {
+  position: relative;
   display: flex;
   flex-wrap: wrap;
   width: 100%;
@@ -18,4 +19,8 @@
 .food {
   transform: rotate(45deg);
   background-color: red;
+}
+
+.death {
+  background-color: #00000052;
 }

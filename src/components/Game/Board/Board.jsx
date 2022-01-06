@@ -70,9 +70,9 @@ function Board({ difficult }) {
       const newTail = newMovement(30, 20, tail.pos, oppositeMov[tail.dir]);
       setSnake((prev) => [...prev, { dir: tail.dir, pos: newTail }]);
 
-      let random = randomInteger(0, 600);
+      let random = randomInteger(0, 599);
       while (cells[random] === true || cells[random] === null) {
-        random = randomInteger(0, 600);
+        random = randomInteger(0, 599);
       }
       setFood(random);
     }

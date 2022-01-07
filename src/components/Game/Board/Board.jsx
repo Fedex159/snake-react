@@ -101,7 +101,7 @@ function Board({
     if (refBoard.current) {
       refBoard.current.focus();
     }
-  }, [refBoard]);
+  }, [refBoard, snake]);
 
   useEffect(() => {
     let interval = null;

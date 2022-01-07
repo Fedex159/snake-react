@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Game from "../Game/Game";
 import Points from "./Points/Points";
+import Scale from "./Scale/Scale";
 import s from "./Home.module.css";
 
 function Home() {
@@ -10,12 +11,14 @@ function Home() {
 
   return (
     <div className={s.container}>
-      <Game
-        setPoints={setPoints}
-        setMaxPoints={setMaxPoints}
-        setShowPoints={setShowPoints}
-      />
-      {showPoints ? <Points points={points} maxPoints={maxPoints} /> : null}
+      <Scale>
+        <Game
+          setPoints={setPoints}
+          setMaxPoints={setMaxPoints}
+          setShowPoints={setShowPoints}
+        />
+        {showPoints ? <Points points={points} maxPoints={maxPoints} /> : null}
+      </Scale>
     </div>
   );
 }

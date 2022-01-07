@@ -6,6 +6,7 @@ import AudioControl from "./AudioControl/AudioControl";
 import s from "./Home.module.css";
 
 export const SoundContext = createContext("Default Value");
+export const PointsContext = createContext("Default Value");
 
 function Home() {
   const [points, setPoints] = useState(0);
@@ -17,11 +18,11 @@ function Home() {
     <div className={s.container}>
       <SoundContext.Provider value={{ enableSound, setEnableSound }}>
         <Scale>
-          <Game
-            setPoints={setPoints}
-            setMaxPoints={setMaxPoints}
-            setShowPoints={setShowPoints}
-          />
+          <PointsContext.Provider
+            value={{ setPoints, setMaxPoints, setShowPoints }}
+          >
+            <Game />
+          </PointsContext.Provider>
           {showPoints ? <Points points={points} maxPoints={maxPoints} /> : null}
         </Scale>
         <AudioControl />

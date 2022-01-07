@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect, useContext } from "react";
 import { newMovement, randomInteger } from "../../../utils";
 import GameOver from "../GameOver/GameOver";
 import eatingSFX from "../../../assets/sounds/eating.mp3";
-import { SoundContext } from "../../Home/Home";
+import { SoundContext, PointsContext } from "../../Home/Home";
 import s from "./Board.module.css";
 
 const directions = ["ArrowDown", "ArrowUp", "ArrowRight", "ArrowLeft"];
@@ -19,19 +19,15 @@ const oppositeMov = {
   ArrowRight: "ArrowLeft",
 };
 
-function Board({
-  difficult,
-  setDifficult,
-  setPoints,
-  setMaxPoints,
-  setShowPoints,
-}) {
+function Board({ difficult, setDifficult }) {
   const width = 600;
   const height = 400;
   const total = (width / 20) * (height / 20);
 
   const refBoard = useRef(null);
   const { enableSound } = useContext(SoundContext);
+  const { setPoints, setMaxPoints, setShowPoints } = useContext(PointsContext);
+
   const [breaks, setBreaks] = useState([]);
   const [cells, setCells] = useState(new Array(total).fill(false));
   const [food, setFood] = useState(null);

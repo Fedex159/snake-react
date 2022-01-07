@@ -4,7 +4,7 @@ import CountDown from "./CountDown/CountDown";
 import StartGame from "./StartGame/StartGame";
 import Board from "./Board/Board";
 
-function Game() {
+function Game({ setPoints, setMaxPoints, setShowPoints }) {
   const [difficult, setDifficult] = useState("");
   const [showCountDown, setShowCountDown] = useState(false);
 
@@ -13,7 +13,13 @@ function Game() {
       {showCountDown ? (
         <CountDown setShowCountDown={setShowCountDown} />
       ) : difficult ? (
-        <Board difficult={difficult} setDifficult={setDifficult} />
+        <Board
+          difficult={difficult}
+          setDifficult={setDifficult}
+          setPoints={setPoints}
+          setMaxPoints={setMaxPoints}
+          setShowPoints={setShowPoints}
+        />
       ) : (
         <StartGame
           setDifficult={setDifficult}

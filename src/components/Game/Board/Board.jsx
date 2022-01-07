@@ -18,7 +18,13 @@ const oppositeMov = {
   ArrowRight: "ArrowLeft",
 };
 
-function Board({ difficult, setDifficult }) {
+function Board({
+  difficult,
+  setDifficult,
+  setPoints,
+  setMaxPoints,
+  setShowPoints,
+}) {
   const width = 600;
   const height = 400;
   const total = (width / 20) * (height / 20);
@@ -43,6 +49,7 @@ function Board({ difficult, setDifficult }) {
       random = randomInteger(0, 599);
     }
     setFood(random);
+    setShowPoints(true);
     // eslint-disable-next-line
   }, []);
 
@@ -61,8 +68,9 @@ function Board({ difficult, setDifficult }) {
 
       const audioEating = new Audio(eatingSFX);
       audioEating.play();
+      setPoints((prev) => prev + 5);
     }
-  }, [snake, food, cells]);
+  }, [snake, food, cells, setPoints]);
 
   useEffect(() => {
     // Remove break when all snake pass
@@ -108,6 +116,12 @@ function Board({ difficult, setDifficult }) {
 
             if (e.pos === newPos || crash.length > 1) {
               setGameOver(true);
+              setPoints((prevActual) => {
+                setMaxPoints((prevMax) =>
+                  prevActual > prevMax ? prevActual : prevMax
+                );
+                return 0;
+              });
             }
             return {
               dir: flag,
@@ -119,7 +133,7 @@ function Board({ difficult, setDifficult }) {
     }
 
     return () => clearInterval(interval);
-  }, [snake, breaks, difficult, gameOver]);
+  }, [snake, breaks, difficult, gameOver, setPoints, setMaxPoints]);
 
   const handleKey = (event) => {
     const newDirection = event.key;
@@ -158,7 +172,9 @@ function Board({ difficult, setDifficult }) {
           }`}
         ></div>
       ))}
-      {gameOver ? <GameOver setDifficult={setDifficult} /> : null}
+      {gameOver ? (
+        <GameOver setDifficult={setDifficult} setShowPoints={setShowPoints} />
+      ) : null}
     </div>
   );
 }

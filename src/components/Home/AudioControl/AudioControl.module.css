@@ -1,0 +1,14 @@
+.container {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+}
+
+.container img {
+  width: 50px;
+  filter: drop-shadow(0 0 0.2rem white);
+}
+
+.container img:hover {
+  cursor: pointer;
+}

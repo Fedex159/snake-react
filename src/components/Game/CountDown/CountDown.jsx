@@ -3,9 +3,9 @@ import beepSFX from "../../../assets/sounds/beep.mp3";
 import s from "./CountDown.module.css";
 
 const audioBeep = new Audio(beepSFX);
-function CountDown({ setShowCountDown }) {
+function CountDown({ setShowCountDown, enableSound }) {
   const [value, setValue] = useState(3);
-  audioBeep.play();
+  if (enableSound) audioBeep.play();
 
   useEffect(() => {
     let interval = null;

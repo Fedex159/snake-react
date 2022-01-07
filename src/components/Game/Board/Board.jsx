@@ -24,6 +24,7 @@ function Board({
   setPoints,
   setMaxPoints,
   setShowPoints,
+  enableSound,
 }) {
   const width = 600;
   const height = 400;
@@ -67,10 +68,10 @@ function Board({
       setFood(random);
 
       const audioEating = new Audio(eatingSFX);
-      audioEating.play();
+      if (enableSound) audioEating.play();
       setPoints((prev) => prev + 5);
     }
-  }, [snake, food, cells, setPoints]);
+  }, [snake, food, cells, setPoints, enableSound]);
 
   useEffect(() => {
     // Remove break when all snake pass
@@ -173,7 +174,11 @@ function Board({
         ></div>
       ))}
       {gameOver ? (
-        <GameOver setDifficult={setDifficult} setShowPoints={setShowPoints} />
+        <GameOver
+          setDifficult={setDifficult}
+          setShowPoints={setShowPoints}
+          enableSound={enableSound}
+        />
       ) : null}
     </div>
   );

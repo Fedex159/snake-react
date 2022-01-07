@@ -2,9 +2,9 @@ import React from "react";
 import gameOverSFX from "../../../assets/sounds/gameOver.mp3";
 import s from "./GameOver.module.css";
 
-function GameOver({ setDifficult, setShowPoints }) {
+function GameOver({ setDifficult, setShowPoints, enableSound }) {
   const audio = new Audio(gameOverSFX);
-  audio.play();
+  if (enableSound) audio.play();
 
   const handleClick = () => {
     setDifficult("");

@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
+import beepSFX from "../../../assets/sounds/beep.mp3";
 import s from "./CountDown.module.css";
 
+const audioBeep = new Audio(beepSFX);
 function CountDown({ setShowCountDown }) {
   const [value, setValue] = useState(3);
+  audioBeep.play();
 
   useEffect(() => {
     let interval = null;

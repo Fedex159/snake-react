@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { newMovement, randomInteger } from "../../../utils";
 import GameOver from "../GameOver/GameOver";
+import eatingSFX from "../../../assets/sounds/eating.mp3";
 import s from "./Board.module.css";
 
 const directions = ["ArrowDown", "ArrowUp", "ArrowRight", "ArrowLeft"];
@@ -57,6 +58,9 @@ function Board({ difficult, setDifficult }) {
         random = randomInteger(0, 599);
       }
       setFood(random);
+
+      const audioEating = new Audio(eatingSFX);
+      audioEating.play();
     }
   }, [snake, food, cells]);
 

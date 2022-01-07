@@ -1,10 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import beepSFX from "../../../assets/sounds/beep.mp3";
+import { SoundContext } from "../../Home/Home";
 import s from "./CountDown.module.css";
 
 const audioBeep = new Audio(beepSFX);
-function CountDown({ setShowCountDown, enableSound }) {
+
+function CountDown({ setShowCountDown }) {
   const [value, setValue] = useState(3);
+  const { enableSound } = useContext(SoundContext);
+
   if (enableSound) audioBeep.play();
 
   useEffect(() => {

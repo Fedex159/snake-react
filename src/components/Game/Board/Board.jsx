@@ -1,7 +1,8 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useContext } from "react";
 import { newMovement, randomInteger } from "../../../utils";
 import GameOver from "../GameOver/GameOver";
 import eatingSFX from "../../../assets/sounds/eating.mp3";
+import { SoundContext } from "../../Home/Home";
 import s from "./Board.module.css";
 
 const directions = ["ArrowDown", "ArrowUp", "ArrowRight", "ArrowLeft"];
@@ -24,13 +25,13 @@ function Board({
   setPoints,
   setMaxPoints,
   setShowPoints,
-  enableSound,
 }) {
   const width = 600;
   const height = 400;
   const total = (width / 20) * (height / 20);
 
   const refBoard = useRef(null);
+  const { enableSound } = useContext(SoundContext);
   const [breaks, setBreaks] = useState([]);
   const [cells, setCells] = useState(new Array(total).fill(false));
   const [food, setFood] = useState(null);
@@ -174,11 +175,7 @@ function Board({
         ></div>
       ))}
       {gameOver ? (
-        <GameOver
-          setDifficult={setDifficult}
-          setShowPoints={setShowPoints}
-          enableSound={enableSound}
-        />
+        <GameOver setDifficult={setDifficult} setShowPoints={setShowPoints} />
       ) : null}
     </div>
   );

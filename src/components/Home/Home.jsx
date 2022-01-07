@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, createContext } from "react";
 import Game from "../Game/Game";
 import Points from "./Points/Points";
 import Scale from "./Scale/Scale";
 import AudioControl from "./AudioControl/AudioControl";
 import s from "./Home.module.css";
+
+export const SoundContext = createContext("Default Value");
 
 function Home() {
   const [points, setPoints] = useState(0);
@@ -13,16 +15,17 @@ function Home() {
 
   return (
     <div className={s.container}>
-      <Scale>
-        <Game
-          setPoints={setPoints}
-          setMaxPoints={setMaxPoints}
-          setShowPoints={setShowPoints}
-          enableSound={enableSound}
-        />
-        {showPoints ? <Points points={points} maxPoints={maxPoints} /> : null}
-      </Scale>
-      <AudioControl enableSound={enableSound} setEnableSound={setEnableSound} />
+      <SoundContext.Provider value={{ enableSound, setEnableSound }}>
+        <Scale>
+          <Game
+            setPoints={setPoints}
+            setMaxPoints={setMaxPoints}
+            setShowPoints={setShowPoints}
+          />
+          {showPoints ? <Points points={points} maxPoints={maxPoints} /> : null}
+        </Scale>
+        <AudioControl />
+      </SoundContext.Provider>
     </div>
   );
 }

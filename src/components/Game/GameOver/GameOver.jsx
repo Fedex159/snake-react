@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import gameOverSFX from "../../../assets/sounds/gameOver.mp3";
+import { SoundContext } from "../../Home/Home";
 import s from "./GameOver.module.css";
 
-function GameOver({ setDifficult, setShowPoints, enableSound }) {
+function GameOver({ setDifficult, setShowPoints }) {
+  const { enableSound } = useContext(SoundContext);
   const audio = new Audio(gameOverSFX);
+
   if (enableSound) audio.play();
 
   const handleClick = () => {

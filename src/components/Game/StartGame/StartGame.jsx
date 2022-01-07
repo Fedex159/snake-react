@@ -9,8 +9,10 @@ const options = [
 
 function StartGame({ setDifficult, setShowCountDown }) {
   const handleClick = (event) => {
-    const value = event.target.id.split("_")[1];
-    setDifficult(value);
+    const value = event.target.id.split("_")[0];
+    const option = options.find((o) => o.name === value);
+
+    setDifficult(option ? option.value : "100");
     setShowCountDown(true);
   };
 

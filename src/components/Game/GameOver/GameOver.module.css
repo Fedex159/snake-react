@@ -15,7 +15,8 @@
 }
 
 .container button {
-  font-size: 2rem;
+  font-family: "VT323", monospace;
+  font-size: 2.5rem;
   margin-top: 50px;
   border: none;
   padding: 10px;

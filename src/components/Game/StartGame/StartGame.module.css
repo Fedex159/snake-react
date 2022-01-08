@@ -23,16 +23,20 @@
   text-align: center;
 }
 
-.options span {
-  padding: 10px;
+.options button {
+  font-family: "VT323", monospace;
   font-size: 2rem;
-  width: 100px;
   font-weight: bold;
+  padding: 10px;
+  width: 100px;
+  line-height: 100%;
+  border: none;
+  background-color: transparent;
 }
 
-.options span:hover {
-  cursor: pointer;
+.options button:hover {
   border-radius: 5px;
+  cursor: pointer;
   background-color: rgba(0, 0, 0, 0.418);
   color: rosybrown;
 }

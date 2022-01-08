@@ -12,8 +12,7 @@ function StartGame({ setShowCountDown }) {
   const { setDifficult } = useContext(StateGlobal);
 
   const handleClick = (event) => {
-    const value = event.target.id.split("_")[0];
-    const option = options.find((o) => o.name === value);
+    const option = options.find((o) => o.name === event.target.value);
 
     setDifficult(option);
     setShowCountDown(true);
@@ -25,13 +24,9 @@ function StartGame({ setShowCountDown }) {
       <h4>SELECT DIFFICULT:</h4>
       <div className={s.options}>
         {options.map((o, i) => (
-          <span
-            key={`${o.name}_${i}`}
-            onClick={handleClick}
-            id={`${o.name}_${o.value}`}
-          >
+          <button key={`${o.name}_${i}`} onClick={handleClick} value={o.name}>
             {o.name}
-          </span>
+          </button>
         ))}
       </div>
     </div>

@@ -1,8 +1,9 @@
 import React, { useRef, useState, useEffect, useContext } from "react";
 import { newMovement, randomInteger } from "../../../utils";
-import GameOver from "../GameOver/GameOver";
-import eatingSFX from "../../../assets/sounds/eating.mp3";
 import { StateGlobal } from "../../Context/Context";
+import GameOver from "../GameOver/GameOver";
+import ArrowsKeys from "../ArrowsKeys/ArrowsKeys";
+import eatingSFX from "../../../assets/sounds/eating.mp3";
 import s from "./Board.module.css";
 
 const directions = ["ArrowDown", "ArrowUp", "ArrowRight", "ArrowLeft"];
@@ -39,6 +40,24 @@ function Board() {
     { dir: "ArrowDown", pos: 20 }, // Tail
   ]);
   const [gameOver, setGameOver] = useState(false);
+
+  const handleKey = (event) => {
+    const newDirection = event.key;
+    const indexDir = directions.indexOf(newDirection);
+
+    const moveValids = validDir[snake[0].dir];
+    const indexMov = moveValids.indexOf(newDirection);
+
+    const flag = indexDir !== -1 && indexMov !== -1;
+    if (flag) {
+      setSnake((prev) => {
+        const arr = [...prev];
+        setBreaks((prev) => [...prev, { dir: arr[0].dir, pos: arr[0].pos }]);
+        arr[0].dir = newDirection;
+        return arr;
+      });
+    }
+  };
 
   // generate a food when start
   useEffect(() => {
@@ -132,24 +151,6 @@ function Board() {
     return () => clearInterval(interval);
   }, [snake, breaks, difficult, gameOver]);
 
-  const handleKey = (event) => {
-    const newDirection = event.key;
-    const indexDir = directions.indexOf(newDirection);
-
-    const moveValids = validDir[snake[0].dir];
-    const indexMov = moveValids.indexOf(newDirection);
-
-    const flag = indexDir !== -1 && indexMov !== -1;
-    if (flag) {
-      setSnake((prev) => {
-        const arr = [...prev];
-        setBreaks((prev) => [...prev, { dir: arr[0].dir, pos: arr[0].pos }]);
-        arr[0].dir = newDirection;
-        return arr;
-      });
-    }
-  };
-
   return (
     <div
       ref={refBoard}
@@ -170,6 +171,7 @@ function Board() {
         ></div>
       ))}
       {gameOver ? <GameOver /> : null}
+      <ArrowsKeys handleKey={!gameOver ? handleKey : null} />
     </div>
   );
 }

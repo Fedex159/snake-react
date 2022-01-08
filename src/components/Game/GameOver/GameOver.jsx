@@ -1,10 +1,11 @@
 import React, { useContext } from "react";
 import gameOverSFX from "../../../assets/sounds/gameOver.mp3";
-import { SoundContext } from "../../Home/Home";
+import { StateGlobal } from "../../Context/Context";
 import s from "./GameOver.module.css";
 
-function GameOver({ setDifficult, setShowPoints, setPoints, setMaxPoints }) {
-  const { enableSound } = useContext(SoundContext);
+function GameOver() {
+  const { enableSound, setShowPoints, setPoints, setMaxPoints, setDifficult } =
+    useContext(StateGlobal);
   const audio = new Audio(gameOverSFX);
 
   if (enableSound) audio.play();

@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
+import { StateGlobal } from "../../Context/Context";
 import s from "./Points.module.css";
 
-function Points({ points, maxPoints, difficult }) {
+function Points() {
+  const { points, maxPoints, difficult } = useContext(StateGlobal);
+
   return (
     <div className={s.container}>
       <h3>{points}</h3>

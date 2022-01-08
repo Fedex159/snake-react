@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
 import soundOn from "../../../assets/imgs/soundOn.png";
 import soundOff from "../../../assets/imgs/soundOff.png";
-import { SoundContext } from "../Home";
+import { StateGlobal } from "../../Context/Context";
 import s from "./AudioControl.module.css";
 
 function AudioControl() {
-  const { enableSound, setEnableSound } = useContext(SoundContext);
+  const { enableSound, setEnableSound } = useContext(StateGlobal);
   return (
     <div className={s.container}>
       <img

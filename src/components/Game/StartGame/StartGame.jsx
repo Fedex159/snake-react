@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { DifficultContext } from "../../Home/Home";
+import { StateGlobal } from "../../Context/Context";
 import s from "./StartGame.module.css";
 
 const options = [
@@ -9,7 +9,7 @@ const options = [
 ];
 
 function StartGame({ setShowCountDown }) {
-  const { setDifficult } = useContext(DifficultContext);
+  const { setDifficult } = useContext(StateGlobal);
 
   const handleClick = (event) => {
     const value = event.target.id.split("_")[0];

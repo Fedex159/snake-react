@@ -1,0 +1,68 @@
+.container {
+  position: absolute;
+  top: 100%;
+  width: 600px;
+  height: 100px;
+  padding: 7px;
+  margin-top: 10px;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  z-index: 1;
+}
+
+.btn {
+  position: absolute;
+  border: none;
+  width: 45px;
+  height: 45px;
+  background-color: transparent;
+}
+
+.btn:hover {
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.24);
+}
+
+.btnUp {
+  left: 46.5%;
+}
+
+.btnDown {
+  bottom: 5px;
+  left: 46.5%;
+}
+
+.btnRight {
+  bottom: 5px;
+  left: 55%;
+}
+
+.btnLeft {
+  bottom: 5px;
+  left: 37.5%;
+}
+
+@media screen and (max-width: 500px) {
+  .container {
+    height: 200px;
+  }
+
+  .btn {
+    width: 80px;
+    height: 90px;
+  }
+
+  .btnUp,
+  .btnDown {
+    left: 44%;
+  }
+
+  .btnLeft {
+    left: 28%;
+  }
+
+  .btnRight {
+    left: 60%;
+  }
+}

@@ -6,6 +6,10 @@
   height: 100%;
 }
 
+.container:focus {
+  outline: none;
+}
+
 .cell {
   width: 20px;
   height: 20px;

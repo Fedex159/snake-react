@@ -17,8 +17,9 @@ function Scale({ children }) {
     };
   }, []);
 
+  // default 1150
   useEffect(() => {
-    setScale(width > 1000 ? Number(width) / 1150 : Number(width) / 700);
+    setScale(width > 1000 ? 1.4 : Number(width) / 700);
   }, [width]);
 
   return (

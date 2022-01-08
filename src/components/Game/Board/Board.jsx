@@ -101,6 +101,15 @@ function Board() {
     }
   }, [refBoard, snake]);
 
+  // GameOver
+  useEffect(() => {
+    const crash = snake.filter((s) => s.pos === snake[0].pos);
+    if (crash.length > 1) {
+      setGameOver(true);
+    }
+  }, [snake]);
+
+  // Update snake every time
   useEffect(() => {
     let interval = null;
 
@@ -111,25 +120,7 @@ function Board() {
             const index = breaks.findIndex((b) => b.pos === e.pos);
             const flag = index === -1 ? e.dir : breaks[index].dir;
             const newPos = newMovement(30, 20, e.pos, flag);
-            const crash = snake.filter((s) => s.pos === newPos);
 
-            if (e.pos === newPos || crash.length > 1) {
-              setGameOver(true);
-              setPoints((prevActual) => {
-                setMaxPoints((prevMax) => {
-                  const newMax = {
-                    ...prevMax,
-                    [difficult.name]:
-                      prevActual > prevMax[difficult.name]
-                        ? prevActual
-                        : prevMax[difficult.name],
-                  };
-                  return newMax;
-                });
-
-                return 0;
-              });
-            }
             return {
               dir: flag,
               pos: newPos,
@@ -140,7 +131,7 @@ function Board() {
     }
 
     return () => clearInterval(interval);
-  }, [snake, breaks, difficult, gameOver, setPoints, setMaxPoints]);
+  }, [snake, breaks, difficult, gameOver]);
 
   const handleKey = (event) => {
     const newDirection = event.key;
@@ -180,7 +171,12 @@ function Board() {
         ></div>
       ))}
       {gameOver ? (
-        <GameOver setDifficult={setDifficult} setShowPoints={setShowPoints} />
+        <GameOver
+          setDifficult={setDifficult}
+          setShowPoints={setShowPoints}
+          setPoints={setPoints}
+          setMaxPoints={setMaxPoints}
+        />
       ) : null}
     </div>
   );

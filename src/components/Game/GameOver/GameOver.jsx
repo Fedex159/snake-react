@@ -10,7 +10,7 @@ function GameOver({ setDifficult, setShowPoints }) {
   if (enableSound) audio.play();
 
   const handleClick = () => {
-    setDifficult("");
+    setDifficult(null);
     setShowPoints(false);
   };
 

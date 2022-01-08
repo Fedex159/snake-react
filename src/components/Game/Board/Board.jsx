@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect, useContext } from "react";
 import { newMovement, randomInteger } from "../../../utils";
 import GameOver from "../GameOver/GameOver";
 import eatingSFX from "../../../assets/sounds/eating.mp3";
-import { SoundContext, PointsContext } from "../../Home/Home";
+import { SoundContext, PointsContext, DifficultContext } from "../../Home/Home";
 import s from "./Board.module.css";
 
 const directions = ["ArrowDown", "ArrowUp", "ArrowRight", "ArrowLeft"];
@@ -19,7 +19,7 @@ const oppositeMov = {
   ArrowRight: "ArrowLeft",
 };
 
-function Board({ difficult, setDifficult }) {
+function Board() {
   const width = 600;
   const height = 400;
   const total = (width / 20) * (height / 20);
@@ -27,6 +27,7 @@ function Board({ difficult, setDifficult }) {
   const refBoard = useRef(null);
   const { enableSound } = useContext(SoundContext);
   const { setPoints, setMaxPoints, setShowPoints } = useContext(PointsContext);
+  const { difficult, setDifficult } = useContext(DifficultContext);
 
   const [breaks, setBreaks] = useState([]);
   const [cells, setCells] = useState(new Array(total).fill(false));
@@ -115,9 +116,17 @@ function Board({ difficult, setDifficult }) {
             if (e.pos === newPos || crash.length > 1) {
               setGameOver(true);
               setPoints((prevActual) => {
-                setMaxPoints((prevMax) =>
-                  prevActual > prevMax ? prevActual : prevMax
-                );
+                setMaxPoints((prevMax) => {
+                  const newMax = {
+                    ...prevMax,
+                    [difficult.name]:
+                      prevActual > prevMax[difficult.name]
+                        ? prevActual
+                        : prevMax[difficult.name],
+                  };
+                  return newMax;
+                });
+
                 return 0;
               });
             }
@@ -127,7 +136,7 @@ function Board({ difficult, setDifficult }) {
             };
           });
         });
-      }, difficult);
+      }, difficult.value);
     }
 
     return () => clearInterval(interval);

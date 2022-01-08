@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import { DifficultContext } from "../../Home/Home";
 import s from "./StartGame.module.css";
 
 const options = [
@@ -7,12 +8,14 @@ const options = [
   { name: "Hard", value: 50 },
 ];
 
-function StartGame({ setDifficult, setShowCountDown }) {
+function StartGame({ setShowCountDown }) {
+  const { setDifficult } = useContext(DifficultContext);
+
   const handleClick = (event) => {
     const value = event.target.id.split("_")[0];
     const option = options.find((o) => o.name === value);
 
-    setDifficult(option ? option.value : "100");
+    setDifficult(option);
     setShowCountDown(true);
   };
 

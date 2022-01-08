@@ -7,10 +7,12 @@ import s from "./Home.module.css";
 
 export const SoundContext = createContext("Default Value");
 export const PointsContext = createContext("Default Value");
+export const DifficultContext = createContext("Default Value");
 
 function Home() {
   const [points, setPoints] = useState(0);
-  const [maxPoints, setMaxPoints] = useState(0);
+  const [maxPoints, setMaxPoints] = useState({ Easy: 0, Medium: 0, Hard: 0 });
+  const [difficult, setDifficult] = useState(null);
   const [showPoints, setShowPoints] = useState(false);
   const [enableSound, setEnableSound] = useState(true);
 
@@ -21,9 +23,17 @@ function Home() {
           <PointsContext.Provider
             value={{ setPoints, setMaxPoints, setShowPoints }}
           >
-            <Game />
+            <DifficultContext.Provider value={{ difficult, setDifficult }}>
+              <Game />
+            </DifficultContext.Provider>
           </PointsContext.Provider>
-          {showPoints ? <Points points={points} maxPoints={maxPoints} /> : null}
+          {showPoints ? (
+            <Points
+              points={points}
+              maxPoints={maxPoints}
+              difficult={difficult}
+            />
+          ) : null}
         </Scale>
         <AudioControl />
       </SoundContext.Provider>

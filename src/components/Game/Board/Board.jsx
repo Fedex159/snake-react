@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect, useContext } from "react";
 import { newMovement, randomInteger } from "../../../utils";
 import { StateGlobal } from "../../Context/Context";
+import { useSwipeable } from "react-swipeable";
 import GameOver from "../GameOver/GameOver";
 import ArrowsKeys from "../ArrowsKeys/ArrowsKeys";
 import eatingSFX from "../../../assets/sounds/eating.mp3";
@@ -18,6 +19,12 @@ const oppositeMov = {
   ArrowUp: "ArrowDown",
   ArrowDown: "ArrowUp",
   ArrowRight: "ArrowLeft",
+};
+const swipes = {
+  Up: "ArrowUp",
+  Down: "ArrowDown",
+  Left: "ArrowLeft",
+  Right: "ArrowRight",
 };
 
 function Board() {
@@ -41,6 +48,19 @@ function Board() {
   ]);
   const [gameOver, setGameOver] = useState(false);
   const [keyOn, setKeyOn] = useState(null);
+
+  const handleSwiped = (event) => {
+    const dir = swipes[event.dir];
+    if (!gameOver) {
+      handleKey({ key: dir });
+    }
+  };
+
+  const handlers = useSwipeable({
+    onSwiping: handleSwiped,
+    trackMouse: true,
+    preventDefaultTouchmoveEvent: true,
+  });
 
   const handleKey = (event) => {
     const newDirection = event.key;
@@ -117,7 +137,7 @@ function Board() {
 
   useEffect(() => {
     if (refBoard.current) {
-      refBoard.current.focus();
+      refBoard.current.parentElement.focus();
     }
   }, [refBoard, snake]);
 
@@ -155,13 +175,15 @@ function Board() {
 
   return (
     <div
-      ref={refBoard}
       className={s.container}
       onKeyDown={!gameOver ? handleKey : null}
+      {...handlers}
       tabIndex={0}
     >
       {cells.map((c, i) => (
         <div
+          ref={i === 0 ? refBoard : null}
+          style={{ userSelect: "none" }}
           key={`cell_${i}`}
           className={`${s.cell} ${
             c === true

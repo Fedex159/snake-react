@@ -28,3 +28,13 @@ export function newMovement(itemsPerRow, columns, position, direction) {
 export function randomInteger(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+
+export function addToLocalStorage(key, value) {
+  const json = JSON.stringify(value);
+  localStorage.setItem(key, json);
+}
+
+export function getToLocalStorage(key) {
+  const value = localStorage.getItem(key);
+  return JSON.parse(value);
+}

@@ -40,6 +40,7 @@ function Board() {
     { dir: "ArrowDown", pos: 20 }, // Tail
   ]);
   const [gameOver, setGameOver] = useState(false);
+  const [keyOn, setKeyOn] = useState(null);
 
   const handleKey = (event) => {
     const newDirection = event.key;
@@ -50,6 +51,7 @@ function Board() {
 
     const flag = indexDir !== -1 && indexMov !== -1;
     if (flag) {
+      setKeyOn(newDirection);
       setSnake((prev) => {
         const arr = [...prev];
         setBreaks((prev) => [...prev, { dir: arr[0].dir, pos: arr[0].pos }]);
@@ -171,7 +173,7 @@ function Board() {
         ></div>
       ))}
       {gameOver ? <GameOver /> : null}
-      <ArrowsKeys handleKey={!gameOver ? handleKey : null} />
+      <ArrowsKeys handleKey={!gameOver ? handleKey : null} keyOn={keyOn} />
     </div>
   );
 }

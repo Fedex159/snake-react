@@ -24,6 +24,10 @@
   background-color: rgba(0, 0, 0, 0.24);
 }
 
+.btnOn {
+  background-color: rgba(0, 0, 0, 0.24);
+}
+
 .btnUp {
   left: 46.5%;
 }

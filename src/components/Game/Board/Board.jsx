@@ -84,8 +84,17 @@ function Board() {
   // generate a food when start
   useEffect(() => {
     let random = randomInteger(0, 599);
-    while (cells[random] === true || cells[random] === null) {
-      random = randomInteger(0, 599);
+    let flag = true;
+    function f(s) {
+      return s.pos === random;
+    }
+
+    while (flag) {
+      if (snake.findIndex(f) !== -1) {
+        random = randomInteger(0, 599);
+      } else {
+        flag = false;
+      }
     }
     setFood(random);
     setShowPoints(true);

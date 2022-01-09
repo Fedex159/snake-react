@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import gameOverSFX from "../../../assets/sounds/gameOver.mp3";
 import { StateGlobal } from "../../Context/Context";
+import { addToLocalStorage } from "../../../utils";
 import s from "./GameOver.module.css";
 
 function GameOver() {
@@ -19,6 +20,7 @@ function GameOver() {
             [difficult.name]:
               points > max[difficult.name] ? points : max[difficult.name],
           };
+          addToLocalStorage("maxPoints", newMax);
           return newMax;
         });
         return 0;

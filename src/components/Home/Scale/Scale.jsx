@@ -2,12 +2,14 @@ import React, { useState, useEffect } from "react";
 import s from "./Scale.module.css";
 
 function Scale({ children }) {
-  const [width, setWidth] = useState(window.innerWidth);
+  const [width, setWidth] = useState(Number(window.innerWidth));
+  const [height, setHeight] = useState(Number(window.innerHeight));
   const [scale, setScale] = useState(1);
 
   useEffect(() => {
     const handleResize = () => {
-      setWidth(window.innerWidth);
+      setWidth(Number(window.innerWidth));
+      setHeight(Number(window.innerHeight));
     };
 
     window.addEventListener("resize", handleResize);
@@ -19,8 +21,11 @@ function Scale({ children }) {
 
   // default 1150
   useEffect(() => {
-    setScale(width > 1000 ? 1.4 : Number(width) / 700);
-  }, [width]);
+    setScale(() => {
+      const value = width > 1000 ? 1.4 : width / 700;
+      return width * value > height ? height / 600 - 0.1 : value;
+    });
+  }, [width, height]);
 
   return (
     <div className={s.container} style={{ transform: `scale(${scale})` }}>

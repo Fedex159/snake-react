@@ -12,10 +12,7 @@ function GameOver() {
     const audio = new Audio(gameOverSFX);
 
     if (enableSound) audio.play();
-    // eslint-disable-next-line
-  }, []);
 
-  const handleClick = () => {
     setDifficult((difficult) => {
       setPoints((points) => {
         setMaxPoints((max) => {
@@ -27,13 +24,18 @@ function GameOver() {
           addToLocalStorage("maxPoints", newMax);
           return newMax;
         });
-        return 0;
+        return points;
       });
 
-      return null;
+      return difficult;
     });
+    // eslint-disable-next-line
+  }, []);
 
+  const handleClick = () => {
     setShowPoints(false);
+    setPoints(0);
+    setDifficult(null);
   };
 
   return (

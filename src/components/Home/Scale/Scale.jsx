@@ -23,7 +23,7 @@ function Scale({ children }) {
   useEffect(() => {
     setScale(() => {
       const value = width > 1000 ? 1.4 : width / 700;
-      return width * value > height ? height / 600 - 0.1 : value;
+      return 600 * value > height ? height / 600 - 0.1 : value;
     });
   }, [width, height]);
 

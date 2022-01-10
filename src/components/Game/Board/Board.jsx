@@ -64,6 +64,7 @@ function Board() {
   });
 
   const handleKey = (event) => {
+    event.preventDefault && event.preventDefault();
     const newDirection = event.key;
     const indexDir = directions.indexOf(newDirection);
 

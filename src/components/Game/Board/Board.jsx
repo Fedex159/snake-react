@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect, useContext } from "react";
-import { newMovement, randomInteger } from "../../../utils";
+import { newMovement, randomInteger, hasTouchScreen } from "../../../utils";
 import { StateGlobal } from "../../Context/Context";
 import { useSwipeable } from "react-swipeable";
 import GameOver from "../GameOver/GameOver";
@@ -48,6 +48,7 @@ function Board() {
   ]);
   const [gameOver, setGameOver] = useState(false);
   const [keyOn, setKeyOn] = useState(null);
+  const [touch, setTouch] = useState(false);
 
   const handleSwiped = (event) => {
     const dir = swipes[event.dir];
@@ -58,7 +59,7 @@ function Board() {
 
   const handlers = useSwipeable({
     onSwiping: handleSwiped,
-    trackMouse: true,
+    trackMouse: !touch ? true : false,
     preventDefaultTouchmoveEvent: true,
   });
 
@@ -98,6 +99,11 @@ function Board() {
     }
     setFood(random);
     setShowPoints(true);
+
+    // set hasTouchScreen device when mounted
+    // for problem with tackMouse in mobile device
+
+    setTouch(hasTouchScreen());
     // eslint-disable-next-line
   }, []);
 

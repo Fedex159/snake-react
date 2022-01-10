@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import gameOverSFX from "../../../assets/sounds/gameOver.mp3";
 import { StateGlobal } from "../../Context/Context";
 import { addToLocalStorage } from "../../../utils";
@@ -7,9 +7,13 @@ import s from "./GameOver.module.css";
 function GameOver() {
   const { enableSound, setShowPoints, setPoints, setMaxPoints, setDifficult } =
     useContext(StateGlobal);
-  const audio = new Audio(gameOverSFX);
 
-  if (enableSound) audio.play();
+  useEffect(() => {
+    const audio = new Audio(gameOverSFX);
+
+    if (enableSound) audio.play();
+    // eslint-disable-next-line
+  }, []);
 
   const handleClick = () => {
     setDifficult((difficult) => {

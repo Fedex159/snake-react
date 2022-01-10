@@ -9,6 +9,7 @@
 .container h2 {
   margin: 10% 0 0 0;
   font-size: 5rem;
+  filter: drop-shadow(0 0 0.2rem white);
 }
 
 .container h4 {
